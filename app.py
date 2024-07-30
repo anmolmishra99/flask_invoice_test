@@ -27,7 +27,12 @@ def download_pdf():
     
     # Save the PDF to a temporary file
     pdf_file_path = 'abc.pdf'
-    pdfkit.from_file(html_file_path, pdf_file_path, options=options, configuration=WKHTMLTOPDF_PATH)
+    
+    # Create a pdfkit configuration object
+    config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
+    
+    # Generate the PDF
+    pdfkit.from_file(html_file_path, pdf_file_path, options=options, configuration=config)
     
     # Send the file for download
     return send_file(pdf_file_path, as_attachment=True, download_name='shaurya.pdf')
