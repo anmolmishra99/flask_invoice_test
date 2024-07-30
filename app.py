@@ -1,7 +1,11 @@
 from flask import Flask, send_file
 import pdfkit
+import os
 
 app = Flask(__name__)
+
+# Set the path to the wkhtmltopdf executable
+WKHTMLTOPDF_PATH = os.environ.get('WKHTMLTOPDF_PATH', '/app/bin/wkhtmltopdf')
 
 @app.route('/download_pdf')
 def download_pdf():
@@ -23,7 +27,7 @@ def download_pdf():
     
     # Save the PDF to a temporary file
     pdf_file_path = 'abc.pdf'
-    pdfkit.from_file(html_file_path, pdf_file_path, options=options)
+    pdfkit.from_file(html_file_path, pdf_file_path, options=options, configuration=WKHTMLTOPDF_PATH)
     
     # Send the file for download
     return send_file(pdf_file_path, as_attachment=True, download_name='shaurya.pdf')
